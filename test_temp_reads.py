@@ -8,11 +8,7 @@ edgepi_tc = EdgePiTC()
 # set thermocouple to measure temperature continuously
 edgepi_tc.set_config(conversion_mode=ConvMode.AUTO)
 
-# set max temp condition
-max_temp = 29
 
-# initialize room temp variable
-room_temp = edgepi_tc.read_temperatures()[1]
 
 # sample temperature readings until room temp exceeds max temp
 while room_temp < max_temp:
