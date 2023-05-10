@@ -15,14 +15,15 @@ edgepi_tc.set_config(conversion_mode=ConvMode.AUTO)
 max_temp = 28
 
 # set finished cooling condition
-finish_temp = max_temp - 4
+finish_temp = max_temp - 3
 
 # initialize room temp variable
 room_temp = edgepi_tc.read_temperatures()[1]
 
-run = True
+# Check if fan is off/on
 fan_on = False
 
+run = True
 while run:
   # wait 1 second between samples
   time.sleep(1)             
