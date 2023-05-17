@@ -31,6 +31,7 @@ while RUN:
     time.sleep(1)
     # read cold-junction and linearized thermocouple temperatures
     _, room_temp = edgepi_tc.read_temperatures()
+    # print room temperature
     print(room_temp)
 
     # turn on fan if room temp exceeds max temp and fan hasn't already been turned on
@@ -41,10 +42,12 @@ while RUN:
         # read state of DAC output 4
         code, voltage, gain = edgepi_dac.get_state(Ch.AOUT4, True, True, True)
         print(code,voltage,gain)
+        # Turn fan state on
         FAN_STATE = True
 
     # turn off fan if room temp is below finish condition
     if room_temp < FINISH_TEMP and FAN_STATE:
         print("Finished Cooling!")
         edgepi_dac.reset()
+        # Turn fan state off
         FAN_STATE = False

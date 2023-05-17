@@ -12,7 +12,7 @@ edgepi_dout = EdgePiDigitalOutput()
 edgepi_tc.set_config(conversion_mode=ConvMode.AUTO)
 
 # set max temp condition
-MAX_TEMP = 26
+MAX_TEMP = 28
 
 # set hysteresis for turning off fan
 FINISH_TEMP = MAX_TEMP - 4
@@ -26,6 +26,7 @@ while RUN:
     time.sleep(1)
     # read cold-junction and linearized thermocouple temperatures
     _, room_temp = edgepi_tc.read_temperatures()
+    # print room temperature
     print(f"{room_temp} degrees Celsius")
 
     # turn on fan if room temp exceeds max temp and fan hasn't already been turned on
@@ -35,13 +36,13 @@ while RUN:
         edgepi_dout.digital_output_direction(GpioPins.DOUT4, False)
         # setting GpioPin 4 to High/On
         edgepi_dout.digital_output_state(GpioPins.DOUT4, True)
-
-    FAN_STATE = True
+        # turn fan state on
+        FAN_STATE = True
 
     # turn off fan if room temp is below finish condition
     if room_temp < FINISH_TEMP and FAN_STATE:
         print("Finished Cooling!")
         # setting GpioPin 4 to Low/Off
         edgepi_dout.digital_output_state(GpioPins.DOUT4, False)
-
+        # turn fan state off
         FAN_STATE = False
